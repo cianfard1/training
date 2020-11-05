@@ -1,8 +1,12 @@
-- hosts: massimiliano1c.mylabserver.com
-  vars:
-     ansible_python_interpreter: /usr/bin/python3
-  tasks:
-    - name: Remove file
-      file:
-        path: /tmp/myfile.txt
-        state: absent
+ - hosts: all_server
+   tasks:
+   - name: install python
+     yum:  
+       name: python
+       state: present    
+   
+   - name: install httpd
+     yum:  
+       name: httpd
+       state: present     
+   become: true

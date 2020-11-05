@@ -1,2 +1,6 @@
-localhost
+[first_compute]
 
+[all_compute]
+
+[first_vm]
+massimilianodolfi1c.mylabserver.com

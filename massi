@@ -1,0 +1,2 @@
+[all_server]
+massimilianodolfi1c.mylabserver.com  ansible_ssh_user=root
