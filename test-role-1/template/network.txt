@@ -1,0 +1,2 @@
+my ip address is 192.168.178.25
+MacOSX is my OS version.
