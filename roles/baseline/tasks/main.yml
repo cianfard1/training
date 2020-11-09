@@ -1,0 +1,4 @@
+- name: configure motd
+  import_tasks: deploy_motd.yml
+- name: deploy nagios client
+  import_tasks: deploy_nagios.yml
