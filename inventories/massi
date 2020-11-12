@@ -1,4 +1,4 @@
 [all_server]
-massimilianodolfi1c.mylabserver.com  ansible_ssh_user=root
+massimilianodolfi1d.mylabserver.com  ansible_ssh_user=root
 massimilianodolfi2d.mylabserver.com  ansible_ssh_user=root
 massimilianodolfi3d.mylabserver.com  ansible_ssh_user=root
