@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: no
+  tasks: 
+  - name: jog chedule
+    cron:
+      name: "job 001" 
+      minute: "0"
+      hour: "5,17"
+      job: "df -h >>/tmp/dispspace"
+
+
+
+
