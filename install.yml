@@ -1,0 +1,7 @@
+- name: playbook to install http ectera
+  hosts: all_server
+  gather_facts: no
+  become: yes
+
+  roles:
+    - test-role-1

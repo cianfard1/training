@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: no
+  tasks:
+  - name: remove job
+    cron:
+      name: "job 001" 
+      state: absent
