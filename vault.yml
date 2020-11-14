@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  vars_files:
+     - /Users/massimilianodolfi/git-projects/training-1/secure
+  tasks:
+  - name: output msg
+    shell: echo {{message }} > /tmp/deployed.txt
+    no_log: true
