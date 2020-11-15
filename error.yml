@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  tasks:
+    - name:
+      get_url:
+        url: http://{{ item }}/index.html
+        dest: /tmp/{{ item }}
+      ignore_errors: yes
+      with_items:
+      - massimilianodolfi1d.mylabserver.com
+      - massimilianodolfi2d.mylabserver.com
+      - massimilianodolfi3d.mylabserver.com

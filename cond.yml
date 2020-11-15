@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+  handlers:
+    - name: restart the http server
+      service: name="httpd" state="restarted"
+      listen: "ciccio"
+  tasks:
+  - name: copy files to servers
+    copy: 
+      src: /Users/massimilianodolfi/git-projects/training-1/test
+      dest: /tmp/test
+#      force: no
+  - name: change config
+    replace:
+      path: /tmp/test
+      regexp: 'file'
+      replace: 'FILEEEEE'
+      backup: yes
+    notify: "ciccio"
+

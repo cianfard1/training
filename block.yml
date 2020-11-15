@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  tasks:
+    - name: get file
+      block:
+        - get_url:
+            url: "http://massimilianodolfi1d.mylabserver.com/indextt.html"
+            dest: "/tmp/index.html"
+          register: var
+      rescue:
+        - debug: msg="the file doesnt exist {{ var }}"
+      always:
+        - debug: msg=" play done" 
