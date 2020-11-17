@@ -1,0 +1,17 @@
+---
+- hosts: node2
+  become: yes
+  tasks:
+  - name: install package fluffy
+    block:
+      - yum:
+        name: installing fluffy
+        state: latest
+    rescue:
+      - name: bla
+        debug:
+          msg: 'failed to install fluffy' 
+    always:
+      - name: bla
+        debug:
+          msg: 'Attempted fluffy install' 
