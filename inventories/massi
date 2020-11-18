@@ -2,3 +2,9 @@
 massimilianodolfi1c.mylabserver.com  ansible_ssh_user=root
 massimilianodolfi2c.mylabserver.com  ansible_ssh_user=root
 massimilianodolfi3c.mylabserver.com  ansible_ssh_user=root
+
+
+[all_serverd]
+massimilianodolfi1d.mylabserver.com  ansible_ssh_user=root
+massimilianodolfi2d.mylabserver.com  ansible_ssh_user=root
+massimilianodolfi3d.mylabserver.com  ansible_ssh_user=root

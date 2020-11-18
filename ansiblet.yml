@@ -1,0 +1,15 @@
+---
+- hosts: all_server
+  become: yes
+  gather_facts: yes
+  tasks: 
+  - name: create user ant give sudo privileges and set password 'welcome1'
+    user:
+      name: ant
+      password: 'welcome1'
+  - name: add to sudo
+    lineinfile:
+      dest: /etc/sudoers
+      state: present
+      line: 'ant        ALL=(ALL)       NOPASSWD: ALL'
+      validate: visudo -cf %s

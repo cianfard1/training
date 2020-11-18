@@ -1,0 +1,8 @@
+---
+- hosts: all_server
+  become: yes
+  tasks:
+  - name: ansible_memory_mb copy template to remote
+    template: 
+      src: ~/git-projects/training-1/roles/apache/template/network.j2
+      dest: /tmp/network.txt 
