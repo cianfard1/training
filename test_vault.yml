@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: yes
+  vars_files:
+     - /Users/massimilianodolfi/git-projects/training-1/hiden_var
+  tasks: 
+  - name: 
+    command: echo "{{ variable }}">>/tmp/outputfromvaulttest.log
+      args:
+      - /Users/massimilianodolfi/git-projects/training-1/hiden_var
