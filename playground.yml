@@ -19,15 +19,35 @@
     - name: rename kafka directory
       command:
         cmd: mv /opt/kafka_2.12-2.2.0 /opt/kafka
-        
+      ignore_errors: yes
+
     - name: remove old directory
       file:
         path: /opt/kafka_2.12-2.2.0.tgz
         state: absent
+      ignore_errors: yes  
+    
+    - name: install Java
+      yum: name=java-11-openjdk.x86_64 state=latest
 
-    # - name: install jave
-    # - name: chack java version
-    # - name: disable RAM swap
+    - name: check java version
+      command: 
+        cmd: java -version
+      register: JavaVersion
+
+    - name: show java version installed
+      debug: 
+        msg: "java version is {{JavaVersion}}"   
+
+    - name: disable RAM swap
+      command:
+        cmd: swapoff -a
+    - name: modify fstab
+      replace: 
+        path: /etc/fstab
+        regexp: '^/swapfile'
+        replace: '#/swapfile'  
+        backup: yes
 
 # wget https://archive.apache.org/dist/kafka/2.2.0/kafka_2.12-2.2.0.tgz
 
