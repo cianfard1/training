@@ -1,16 +1,24 @@
----
-# tasks file for test-role-1
-   - name: install python
-     yum:
-       name: python
-       state: present
+- name: check if kafka is already installed
+  shell: /opt/kafka/bin/kafka-topics.sh --version
+  register: KafkaVersion  
 
-   - name: install httpd
-     yum:
-       name: httpd
-       state: present
-
-   - name: start httpd
-     service:
-        name: httpd
-        state: started
+- block:   
+   - name: download package
+     get_url: 
+       url: https://archive.apache.org/dist/kafka/2.2.0/kafka_2.12-2.2.0.tgz
+       dest: /opt
+   - name: untar package
+     unarchive:
+      src: /opt/kafka_2.12-2.2.0.tgz
+      dest: /opt/    
+      remote_src: yes
+   - name: rename kafka directory
+     command:
+      cmd: mv /opt/kafka_2.12-2.2.0 /opt/kafka
+     ignore_errors: yes
+   - name: remove old directory
+     file:
+       path: /opt/kafka_2.12-2.2.0.tgz
+       state: absent
+     ignore_errors: yes 
+  when: KafkaVersion is not defined   

@@ -7,26 +7,16 @@
       yum: name=screen state=latest
     - name: install tree -
       yum: name=tree state=latest
-    - name: download package
-      get_url: 
-        url: https://archive.apache.org/dist/kafka/2.2.0/kafka_2.12-2.2.0.tgz
-        dest: /opt
-    - name: untar package
-      unarchive:
-        src: /opt/kafka_2.12-2.2.0.tgz
-        dest: /opt/    
-        remote_src: yes
-    - name: rename kafka directory
-      command:
-        cmd: mv /opt/kafka_2.12-2.2.0 /opt/kafka
-      ignore_errors: yes
+      
+- hosts: all_server
+  become: yes
+  roles:
+    - kafka        
 
-    - name: remove old directory
-      file:
-        path: /opt/kafka_2.12-2.2.0.tgz
-        state: absent
-      ignore_errors: yes  
-    
+- hosts: all_server
+  become: yes
+  serial: 1
+  tasks:
     - name: install Java
       yum: name=java-11-openjdk.x86_64 state=latest
 
