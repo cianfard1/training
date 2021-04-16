@@ -1,6 +1,7 @@
 - name: check if kafka is already installed
   shell: /opt/kafka/bin/kafka-topics.sh --version
   register: KafkaVersion  
+  ignore_errors: True
 
 #- name: copy zookeper
 #  copy: 
@@ -21,6 +22,7 @@
     src: kafka
     dest: /etc/init.d/kafka
     owner: root 
+    mode: u=rxw,g=r,o=r
 
 - name: update kafka
   shell: 'chkconfig --add /etc/init.d/kafka'
