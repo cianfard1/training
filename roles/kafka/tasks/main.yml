@@ -2,6 +2,34 @@
   shell: /opt/kafka/bin/kafka-topics.sh --version
   register: KafkaVersion  
 
+- name: copy zookeper
+  copy: 
+    src: zookeeper
+    dest: /etc/init.d/zookeeper
+    owner: root 
+
+- name: update rc.d
+  shell: 'chkconfig --add /etc/init.d/zookeeper'
+
+- name: start zookeeper
+  service:
+    name: zookeeper
+    state: started
+
+- name: copy kafka
+  copy: 
+    src: kafka
+    dest: /etc/init.d/kafka
+    owner: root 
+
+- name: update kafka
+  shell: 'chkconfig --add /etc/init.d/kafka'
+
+- name: start kafka
+  service:
+    name: kafka
+    state: started
+
 - block:   
    - name: download package
      get_url: 
@@ -21,4 +49,5 @@
        path: /opt/kafka_2.12-2.2.0.tgz
        state: absent
      ignore_errors: yes 
+
   when: KafkaVersion is not defined   
