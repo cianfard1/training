@@ -2,20 +2,20 @@
   shell: /opt/kafka/bin/kafka-topics.sh --version
   register: KafkaVersion  
 
-- name: copy zookeper
-  copy: 
-    src: zookeeper
-    dest: /etc/init.d/zookeeper
-    owner: root 
+#- name: copy zookeper
+#  copy: 
+#    src: zookeeper
+#    dest: /etc/init.d/zookeeper
+#    owner: root 
 
-- name: update rc.d
-  shell: 'chkconfig --add /etc/init.d/zookeeper'
-
-- name: start zookeeper
-  service:
-    name: zookeeper
-    state: started
-
+#- name: update rc.d
+#  shell: 'chkconfig --add /etc/init.d/zookeeper'
+#
+#- name: start zookeeper
+#  service:
+#    name: zookeeper
+#    state: started
+#
 - name: copy kafka
   copy: 
     src: kafka
@@ -29,6 +29,16 @@
   service:
     name: kafka
     state: started
+
+- name: create kafka directory
+  file:
+    path: /data/kafka
+    state: directory
+
+- name: kafka configuration file    
+  template:
+    src: server.properties
+    dest: /opt/kafka/config/
 
 - block:   
    - name: download package

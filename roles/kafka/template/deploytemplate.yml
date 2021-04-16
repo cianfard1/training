@@ -1,8 +1,0 @@
---- 
-#- hosts: massimilianodolfi1d.mylabserver.com
-- hosts: localhost
-  tasks:
-  - name: deplay net file
-    template:
-      src: /Users/massimilianodolfi/git-projects/training-1/test-role-1/template/network.j2
-      dest: /Users/massimilianodolfi/git-projects/training-1/test-role-1/template/network.txt
