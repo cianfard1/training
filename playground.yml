@@ -8,12 +8,12 @@
     - name: install tree -
       yum: name=tree state=latest
       
-- hosts: all_server
+- hosts: kafka
   become: yes
   roles:
     - kafka        
 
-- hosts: all_server
+- hosts: kafka
   become: yes
   serial: 1
   tasks:

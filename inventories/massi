@@ -1,10 +1,10 @@
+[kafka]
+massimilianodolfi1c.mylabserver.com  ansible_ssh_user=ansible broker_id=1 kafka_name=kafka1
+massimilianodolfi2c.mylabserver.com  ansible_ssh_user=ansible broker_id=2 kafka_name=kafka2
+massimilianodolfi3c.mylabserver.com  ansible_ssh_user=ansible broker_id=3 kafka_name=kafka3
+
 [all_server]
 massimilianodolfi1c.mylabserver.com  ansible_ssh_user=ansible
 massimilianodolfi2c.mylabserver.com  ansible_ssh_user=ansible
 massimilianodolfi3c.mylabserver.com  ansible_ssh_user=ansible
 
-
-[all_serverd]
-massimilianodolfi1d.mylabserver.com  ansible_ssh_user=ansible
-massimilianodolfi2d.mylabserver.com  ansible_ssh_user=ansible
-massimilianodolfi3d.mylabserver.com  ansible_ssh_user=ansible

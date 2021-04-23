@@ -1,5 +1,5 @@
-- name: check if kafka is already installed
-  shell: /opt/kafka/bin/kafka-topics.sh --version
+- name: c/opt/kafka/bin/kafka-topics.sh --versionheck if kafka is already installed
+  shell: /opt/kafka/bin/kafka-topics.sh --version | awk '{ print $1 }'
   register: KafkaVersion  
   ignore_errors: True
 
@@ -19,11 +19,11 @@
      ignore_errors: yes
    - name: remove old directory
      file:
-       path: /opt/kafka_2.12-2.2.0.tgz
+       path: /opt/kafka_2.12-2.2.0.tgzcd ..
        state: absent
      ignore_errors: yes 
 
-  when: KafkaVersion is not defined   
+  when: KafkaVersion !='2.2.0'
 
 
 - name: copy kafka
@@ -41,16 +41,20 @@
     path: /data/kafka
     state: directory
 
+- name: remove server.properties file
+  file:
+    path: /opt/kafka/config/server.properties
+    state: absent    
+
 - name: kafka configuration file    
   template:
     src: server.properties
     dest: /opt/kafka/config/
-
       
 - name: modify /etc/hosts
   lineinfile:
     path: /etc/hosts
-    line: "172.31.127.194 kafka1 \n 172.31.127.194  zookeeper \n  172.31.123.189 kafka 2 \n 172.31.123.189  zookeper2 \n 172.31.126.225  kafka3 \n 172.31.126.225  zookeeper3"
+    line: "172.31.127.194 kafka1 \n 172.31.127.194  zookeeper1 \n  172.31.123.189 kafka2 \n 172.31.123.189  zookeper2 \n 172.31.126.225  kafka3 \n 172.31.126.225  zookeeper3"
 
 - name: Create the logs Directory and myid File for the Zookeeper Service
   file: 
