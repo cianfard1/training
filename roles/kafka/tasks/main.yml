@@ -1,4 +1,4 @@
-- name: c/opt/kafka/bin/kafka-topics.sh --versionheck if kafka is already installed
+- name: check if kafka is already installed--dobt work
   shell: /opt/kafka/bin/kafka-topics.sh --version | awk '{ print $1 }'
   register: KafkaVersion  
   ignore_errors: True
@@ -8,23 +8,25 @@
      get_url: 
        url: https://archive.apache.org/dist/kafka/2.2.0/kafka_2.12-2.2.0.tgz
        dest: /opt
+
    - name: untar package
      unarchive:
       src: /opt/kafka_2.12-2.2.0.tgz
       dest: /opt/    
       remote_src: yes
+
    - name: rename kafka directory
      command:
       cmd: mv /opt/kafka_2.12-2.2.0 /opt/kafka
      ignore_errors: yes
+
    - name: remove old directory
      file:
-       path: /opt/kafka_2.12-2.2.0.tgzcd ..
+       path: /opt/kafka_2.12-2.2.0.tgz
        state: absent
      ignore_errors: yes 
 
   when: KafkaVersion !='2.2.0'
-
 
 - name: copy kafka
   copy: 
@@ -54,19 +56,19 @@
 - name: modify /etc/hosts
   lineinfile:
     path: /etc/hosts
-    line: "172.31.127.194 kafka1 \n 172.31.127.194  zookeeper1 \n  172.31.123.189 kafka2 \n 172.31.123.189  zookeper2 \n 172.31.126.225  kafka3 \n 172.31.126.225  zookeeper3"
+    #line: "172.31.127.194  kafka1 \n172.31.127.194  zookeeper1 \n172.31.123.189  kafka2 \n172.31.123.189  zookeper2 \n172.31.126.225  kafka3 \n172.31.126.225  zookeeper3"
+    line: "{{ansible_default_ipv4.address}}  kafka1 \n172.31.127.194  zookeeper1 \n172.31.123.189  kafka2 \n172.31.123.189  zookeper2 \n172.31.126.225  kafka3 \n172.31.126.225  zookeeper3"
+    state: present
 
 - name: Create the logs Directory and myid File for the Zookeeper Service
   file: 
     path: /data/zookeeper
     state: directory
  
-- name: create zookeeper file
-  lineinfile:
-    path: /data/zookeeper/myid
-    line: "1\n2\n3\n"
-    state: present
-    create: true
+- name: create zookeeper file-- it should create 1 number per file host
+  copy:
+    src: /data/zookeeper/myid
+    dest: /data/zookeeper/myid
 
 - name: Create the zookeeper.properties File
   copy:

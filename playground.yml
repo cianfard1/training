@@ -1,18 +1,5 @@
 ---
-- hosts: all_server
-  become: yes
-  serial: 1
-  tasks:
-    - name: install screen -
-      yum: name=screen state=latest
-    - name: install tree -
-      yum: name=tree state=latest
-      
-- hosts: kafka
-  become: yes
-  roles:
-    - kafka        
-
+           
 - hosts: kafka
   become: yes
   serial: 1
@@ -32,6 +19,7 @@
     - name: disable RAM swap
       command:
         cmd: swapoff -a
+
     - name: modify fstab
       replace: 
         path: /etc/fstab
@@ -39,7 +27,10 @@
         replace: '#/swapfile'  
         backup: yes
 
-
+- hosts: kafka
+  become: yes
+  roles:
+    - kafka   
 
 
 
