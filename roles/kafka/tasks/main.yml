@@ -3,45 +3,6 @@
   register: KafkaVersion  
   ignore_errors: True
 
-#- name: copy zookeper
-#  copy: 
-#    src: zookeeper
-#    dest: /etc/init.d/zookeeper
-#    owner: root 
-
-#- name: update rc.d
-#  shell: 'chkconfig --add /etc/init.d/zookeeper'
-#
-#- name: start zookeeper
-#  service:
-#    name: zookeeper
-#    state: started
-#
-- name: copy kafka
-  copy: 
-    src: kafka
-    dest: /etc/init.d/kafka
-    owner: root 
-    mode: u=rxw,g=r,o=r
-
-- name: update kafka
-  shell: 'chkconfig --add /etc/init.d/kafka'
-
-- name: start kafka
-  service:
-    name: kafka
-    state: started
-
-- name: create kafka directory
-  file:
-    path: /data/kafka
-    state: directory
-
-- name: kafka configuration file    
-  template:
-    src: server.properties
-    dest: /opt/kafka/config/
-
 - block:   
    - name: download package
      get_url: 
@@ -63,3 +24,52 @@
      ignore_errors: yes 
 
   when: KafkaVersion is not defined   
+
+
+- name: copy kafka
+  copy: 
+    src: kafka
+    dest: /etc/init.d/kafka
+    owner: root 
+    mode: u=rxw,g=r,o=r
+
+- name: update kafka
+  shell: 'chkconfig --add /etc/init.d/kafka'
+
+- name: create kafka directory
+  file:
+    path: /data/kafka
+    state: directory
+
+- name: kafka configuration file    
+  template:
+    src: server.properties
+    dest: /opt/kafka/config/
+
+      
+- name: modify /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "172.31.127.194 kafka1 \n 172.31.127.194  zookeeper \n  172.31.123.189 kafka 2 \n 172.31.123.189  zookeper2 \n 172.31.126.225  kafka3 \n 172.31.126.225  zookeeper3"
+
+- name: Create the logs Directory and myid File for the Zookeeper Service
+  file: 
+    path: /data/zookeeper
+    state: directory
+ 
+- name: create zookeeper file
+  lineinfile:
+    path: /data/zookeeper/myid
+    line: "1\n2\n3\n"
+    state: present
+    create: true
+
+- name: Create the zookeeper.properties File
+  copy:
+    src: zookeeper.properties
+    dest: /opt/kafka/config/zookeeper.properties
+   
+- name: start kafka
+  service:
+    name: kafka
+    state: started

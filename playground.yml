@@ -39,79 +39,7 @@
         replace: '#/swapfile'  
         backup: yes
 
-# wget https://archive.apache.org/dist/kafka/2.2.0/kafka_2.12-2.2.0.tgz
 
-# tar -xvf kafka_2.12-2.2.0.tgz
 
-# mv kafka_2.12-2.2.0 kafka
 
-# cd kafka
-# Install Java
 
-# sudo apt install -y default-jdk
-
-# java -version
-# Disable RAM Swap
-
-# swapoff -a
-
-# sudo sed -i '/ swap / s/^/#/' /etc/fstab
-# Create the Zookeeper Service File
-
-# sudo vim /etc/init.d/zookeeper
-# Contents of the zookeeper File
-
-# #!/bin/bash
-# #/etc/init.d/zookeeper
-# DAEMON_PATH=/home/cloud_user/kafka/bin
-# DAEMON_NAME=zookeeper
-# # Check that networking is up.
-# #[ ${NETWORKING} = "no" ] && exit 0
-
-# PATH=$PATH:$DAEMON_PATH
-
-# case "$1" in
-#   start)
-#         # Start daemon.
-#         pid=`ps ax | grep -i 'org.apache.zookeeper' | grep -v grep | awk '{print $1}'`
-#         if [ -n "$pid" ]
-#           then
-#             echo "Zookeeper is already running";
-#         else
-#           echo "Starting $DAEMON_NAME";
-#           $DAEMON_PATH/zookeeper-server-start.sh -daemon /home/cloud_user/kafka/config/zookeeper.properties
-#         fi
-#         ;;
-#   stop)
-#         echo "Shutting down $DAEMON_NAME";
-#         $DAEMON_PATH/zookeeper-server-stop.sh
-#         ;;
-#   restart)
-#         $0 stop
-#         sleep 2
-#         $0 start
-#         ;;
-#   status)
-#         pid=`ps ax | grep -i 'org.apache.zookeeper' | grep -v grep | awk '{print $1}'`
-#         if [ -n "$pid" ]
-#           then
-#           echo "Zookeeper is Running as PID: $pid"
-#         else
-#           echo "Zookeeper is not Running"
-#         fi
-#         ;;
-#   *)
-#         echo "Usage: $0 {start|stop|restart|status}"
-#         exit 1
-# esac
-
-# exit 0
-# Change the File's Permissions and Start the Service
-
-# sudo chmod +x /etc/init.d/zookeeper
-# sudo chown root:root /etc/init.d/zookeeper
-
-# sudo update-rc.d zookeeper defaults
-
-# sudo service zookeeper start
-# sudo service zookeeper status
