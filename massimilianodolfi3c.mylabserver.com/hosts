@@ -1,0 +1,16 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+# Cloud Server Hostname mapping
+172.31.126.225   massimilianodolfi3c.mylabserver.com
+172.31.127.194  kafka1 
+172.31.127.194  zookeeper1 
+172.31.123.189  kafka2 
+172.31.123.189  zookeeper2 
+172.31.126.225  kafka3 
+172.31.126.225  zookeeper3
+172.31.126.225  kafka1 
+172.31.127.194  zookeeper1 
+172.31.123.189  kafka2 
+172.31.123.189  zookeper2 
+172.31.126.225  kafka3 
+172.31.126.225  zookeeper3

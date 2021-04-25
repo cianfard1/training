@@ -2,6 +2,7 @@
   shell: /opt/kafka/bin/kafka-topics.sh --version | awk '{ print $1 }'
   register: KafkaVersion  
   ignore_errors: True
+- debug: var=KafkaVersion
 
 - block:   
    - name: download package
@@ -50,15 +51,28 @@
 
 - name: kafka configuration file    
   template:
-    src: server.properties
+    src: server.properties.j2
     dest: /opt/kafka/config/
       
-- name: modify /etc/hosts
+#- name: modify /etc/hosts
+#  lineinfile:
+#    path: /etc/hosts
+#    #line: "172.31.127.194  kafka1 \n172.31.127.194  zookeeper1 \n172.31.123.189  kafka2 \n172.31.123.189  zookeper2 \n172.31.126.225  kafka3 \n172.31.126.225  zookeeper3"
+#    line: "{{ansible_default_ipv4.address}}  kafka1 \n172.31.127.194  zookeeper1 \n172.31.123.189  kafka2 \n172.31.123.189  zookeper2 \n172.31.126.225  kafka3 \n172.31.126.225  zookeeper3"
+#    state: present
+
+- name: modify /etc/hosts file
   lineinfile:
-    path: /etc/hosts
-    #line: "172.31.127.194  kafka1 \n172.31.127.194  zookeeper1 \n172.31.123.189  kafka2 \n172.31.123.189  zookeper2 \n172.31.126.225  kafka3 \n172.31.126.225  zookeeper3"
-    line: "{{ansible_default_ipv4.address}}  kafka1 \n172.31.127.194  zookeeper1 \n172.31.123.189  kafka2 \n172.31.123.189  zookeper2 \n172.31.126.225  kafka3 \n172.31.126.225  zookeeper3"
-    state: present
+    line: "{{ ansible_default_ipv4.address }} zookeeper{{ broker_id }}\n{{ ansible_default_ipv4.address }} kafka{{ broker_id }}"
+    dest: /tmp/hosts 
+    create: true     
+  delegate_to: localhost  
+
+- name: copy remote
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{item}}"
+  with_lines: cat /tmp/hosts  
 
 - name: Create the logs Directory and myid File for the Zookeeper Service
   file: 
@@ -66,8 +80,8 @@
     state: directory
  
 - name: create zookeeper file-- it should create 1 number per file host
-  copy:
-    src: /data/zookeeper/myid
+  template:
+    src: myid.j2
     dest: /data/zookeeper/myid
 
 - name: Create the zookeeper.properties File

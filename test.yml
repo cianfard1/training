@@ -1,0 +1,29 @@
+---
+           
+- hosts: kafka
+  become: yes
+  serial: 1
+  tasks:
+    - name: create hosts file with kafka/zoo def
+      lineinfile:
+        line: "{{ ansible_default_ipv4.address }} zookeeper{{ broker_id }}"
+        dest: /tmp/hosts 
+        create: true     
+      delegate_to: localhost  
+
+    #- name: copy remote hosts file to local
+    #  fetch: 
+    #    src: /etc/hosts
+    #    dest: "{{inventory_hostname}}/hosts"
+    #    flat: yes
+
+    - name: copy remote
+      lineinfile:
+        dest: /etc/hosts
+        line: "{{item}}"
+      with_lines: cat /tmp/hosts  
+
+    - name: create zookeeper file-- it should create 1 number per file host
+      copy:
+        src: myid
+        dest: /data/zookeeper/myid  

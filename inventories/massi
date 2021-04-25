@@ -7,4 +7,11 @@ massimilianodolfi3c.mylabserver.com  ansible_ssh_user=ansible broker_id=3 kafka_
 massimilianodolfi1c.mylabserver.com  ansible_ssh_user=ansible
 massimilianodolfi2c.mylabserver.com  ansible_ssh_user=ansible
 massimilianodolfi3c.mylabserver.com  ansible_ssh_user=ansible
+massimilianodolfi4c.mylabserver.com  ansible_ssh_user=ansible
+massimilianodolfi5c.mylabserver.com  ansible_ssh_user=ansible
 
+[nifi]
+massimilianodolfi5c.mylabserver.com  ansible_ssh_user=ansible
+
+[sqlite]
+massimilianodolfi4c.mylabserver.com  ansible_ssh_user=ansible

@@ -31,6 +31,3 @@
   become: yes
   roles:
     - kafka   
-
-
-
