@@ -1,3 +1,21 @@
-- name: install java
+ - name: install Java
+      yum: name=java-11-openjdk.x86_64 state=latest
+
 - name: download nifi
+  get_url: 
+    url: https://archive.apache.org/dist/nifi/1.12.1/nifi-1.12.1-bin.tar.gz
+    dest: /opt 
+
 - name: install nifi
+  unarchive:
+    src: nifi-1.12.1-bin.tar.gz
+    dest: /opt
+    remote_src: yes
+
+- name: create service
+  shell: /opt/nifi/bin/nifi.sh install
+
+- name: start nifi service
+  service:
+    name: nifi
+    state: started

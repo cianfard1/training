@@ -52,7 +52,7 @@
 - name: kafka configuration file    
   template:
     src: server.properties.j2
-    dest: /opt/kafka/config/
+    dest: /opt/kafka/config/server.properties
       
 #- name: modify /etc/hosts
 #  lineinfile:

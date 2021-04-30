@@ -31,3 +31,7 @@
   become: yes
   roles:
     - kafka   
+- hosts: nifi
+  become: yes
+  roles:
+    - nifi       
