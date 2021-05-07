@@ -13,9 +13,9 @@
    - name: untar package
      unarchive:
       src: /opt/kafka_2.12-2.2.0.tgz
-      dest: /opt/    
+      dest: /opt/
       remote_src: yes
-
+   
    - name: rename kafka directory
      command:
       cmd: mv /opt/kafka_2.12-2.2.0 /opt/kafka
@@ -29,15 +29,15 @@
 
   when: KafkaVersion !='2.2.0'
 
-- name: copy kafka
-  copy: 
-    src: kafka
-    dest: /etc/init.d/kafka
-    owner: root 
-    mode: u=rxw,g=r,o=r
+#- name: copy kafka
+#  copy: 
+#    src: kafka
+##    dest: /etc/init.d/kafka
+##    owner: root 
+##    mode: u=rxw,g=r,o=r
 
-- name: update kafka
-  shell: 'chkconfig --add /etc/init.d/kafka'
+#- name: update kafka
+#  shell: 'chkconfig --add /etc/init.d/kafka'
 
 - name: create kafka directory
   file:
@@ -59,14 +59,7 @@
 #    path: /etc/hosts
 #    #line: "172.31.127.194  kafka1 \n172.31.127.194  zookeeper1 \n172.31.123.189  kafka2 \n172.31.123.189  zookeper2 \n172.31.126.225  kafka3 \n172.31.126.225  zookeeper3"
 #    line: "{{ansible_default_ipv4.address}}  kafka1 \n172.31.127.194  zookeeper1 \n172.31.123.189  kafka2 \n172.31.123.189  zookeper2 \n172.31.126.225  kafka3 \n172.31.126.225  zookeeper3"
-#    state: present
-
-- name: modify /etc/hosts file
-  lineinfile:
-    line: "{{ ansible_default_ipv4.address }} zookeeper{{ broker_id }}\n{{ ansible_default_ipv4.address }} kafka{{ broker_id }}"
-    dest: /tmp/hosts 
-    create: true     
-  delegate_to: localhost  
+#    state: present 
 
 - name: copy remote
   lineinfile:
@@ -89,7 +82,7 @@
     src: zookeeper.properties
     dest: /opt/kafka/config/zookeeper.properties
    
-- name: start kafka
-  service:
-    name: kafka
-    state: started
+#- name: start kafka
+#  service:
+#    name: kafka
+#    state: started

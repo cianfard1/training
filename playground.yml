@@ -1,4 +1,13 @@
 ---
+- hosts: kafka
+  serial: 1
+  tasks:
+    - name: modify /etc/hosts file
+      lineinfile:
+        line: "{{ ansible_default_ipv4.address }} zookeeper{{ broker_id }}\n{{ ansible_default_ipv4.address }} kafka{{ broker_id }}"
+        dest: /tmp/hosts 
+        create: true     
+      delegate_to: localhost 
            
 - hosts: kafka
   become: yes
@@ -29,8 +38,10 @@
 
 - hosts: kafka
   become: yes
+  become_user: root
   roles:
     - kafka   
+    
 - hosts: nifi
   become: yes
   roles:

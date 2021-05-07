@@ -1,5 +1,5 @@
- - name: install Java
-      yum: name=java-11-openjdk.x86_64 state=latest
+- name: install Java
+  yum: name=java-11-openjdk.x86_64 state=latest
 
 - name: download nifi
   get_url: 

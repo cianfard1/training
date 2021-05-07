@@ -1,0 +1,10 @@
+bin/kafka-topics.sh --create --topic test40 --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper1:2181
+bin/kafka-console-consumer.sh --bootstrap-server zookeeper1:2181 --topic test40 --from-beginning --max-messages 30
+bin/kafka-topics.sh --zookeeper zookeeper2:2181/kafka --list
+bin/kafka-console-producer.sh --broker-list kafka2:9092 --topic test40
+bin/zookeeper-shell.sh zookeeper1:2183 ls /brokers/ids
+
+/etc/rc.d/init.d/kafka stop
+
+ps -ef |grep zookeeper
+
