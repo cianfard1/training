@@ -28,6 +28,16 @@
 
   when: KafkaVersion !='2.2.0'
 
+- name: copy zookeeper
+  copy: 
+    src: zookeeper
+    dest: /etc/init.d/zookeeper
+    owner: root 
+    mode: u=rxw,g=r,o=r
+
+- name: update zookeeper
+  shell: 'update-rc.d zookeeper defaults'
+
 - name: copy kafka
   copy: 
     src: kafka
@@ -36,7 +46,7 @@
     mode: u=rxw,g=r,o=r
 
 - name: update kafka
-  shell: 'chkconfig --add /etc/init.d/kafka'
+  shell: 'update-rc.d kafka defaults'
 
 - name: create kafka directory
   file:
@@ -73,7 +83,13 @@
   copy:
     src: zookeeper.properties
     dest: /opt/kafka/config/zookeeper.properties
-   
+
+    
+- name: start zookeeper
+  service:
+    name: zookeeper
+    state: started
+
 - name: start kafka
   service:
     name: kafka

@@ -1,10 +1,34 @@
 bin/kafka-topics.sh --create --topic test40 --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper1:2181
 bin/kafka-console-consumer.sh --bootstrap-server zookeeper1:2181 --topic test40 --from-beginning --max-messages 30
-bin/kafka-topics.sh --zookeeper zookeeper2:2181/kafka --list
+bin/kafka-topics.sh --zookeeper zookeeper2:6001/kafka --list
 bin/kafka-console-producer.sh --broker-list kafka2:9092 --topic test40
 bin/zookeeper-shell.sh zookeeper1:2183 ls /brokers/ids
+
+
+(echo >/dev/tcp/172.31.119.98/9092) &>/dev/null && echo "open" || echo "close"
 
 /etc/rc.d/init.d/kafka stop
 
 ps -ef |grep zookeeper
+
+
+9092::5901
+2181::6001
+2888::31297
+3888::3389
+CMD="/opt/kafka/bin/zookeeper-server-start.sh /opt/kafka/config/zookeeper.properties"
+KCMD="/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties"
+
+
+tarting Nmap 6.40 ( http://nmap.org ) at 2021-05-08 11:36 EDT
+Nmap scan report for zookeeper1 (172.31.113.27)
+Host is up (0.00073s latency).
+Not shown: 65530 closed ports
+PORT      STATE SERVICE
+22/tcp    open  ssh
+3389/tcp  open  ms-wbt-server
+5901/tcp  open  vnc-1
+6001/tcp  open  X11:1
+31297/tcp open  unknown
+MAC Address: 02:82:A8:05:47:
 
