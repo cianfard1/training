@@ -14,7 +14,7 @@
   serial: 1
   tasks:
     - name: install Java
-      yum: name=java-11-openjdk.x86_64 state=latest
+      yum: name=openjdk-11-jdk state=latest
 
     - name: check java version
       command: 
