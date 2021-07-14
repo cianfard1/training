@@ -7,3 +7,4 @@
        src: /Users/massimilianodolfi/git-projects/training-1/roles/baseline/templates/hardened.j2
        dest: /etc/sudoers.d/hardened
        validate: /sbin/visudo -cf %s
+### this is a test       
